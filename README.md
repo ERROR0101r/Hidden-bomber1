@@ -1,27 +1,33 @@
-<h1> align="center">🚀 Hidden-Bomber</h1>
-<p align="center"><strong>A fun and powerful tool crafted by <span style="color:#ff6b81;">HIDDEN KING</span> 😎</strong></p>
+
+<h1 align="center">🚀 Hidden-Bomber</h1>
+<p align="center"><strong>A slick and powerful SMS bombing tool forged by <span style="color:#ff6b81;">HIDDEN KING</span> 😎</strong></p>
 
 ---
 
-### 📱 Contact Me
-> Having issues or just want to say hi? Feel free to reach out!
+### 📲 Connect With Me
 
-- 📲 **Telegram:** [t.me/HiddenKing0](https://t.me/HiddenKing0)  
-- 📸 **Instagram:** [@boss0101r](https://instagram.com/boss0101r)
+Got questions? Feedback? Or just wanna vibe? Reach out below:
+
+- 📡 Telegram: [@HiddenKing0](https://t.me/HiddenKing0)  
+- 📸 Instagram: [@boss0101r](https://instagram.com/boss0101r)
 
 ---
 
-### ⚙️ How to Run the Bomber
+### ⚙️ Quick Start Guide
+
+Clone the repo and run:
+
 ```bash
 bash setup.sh
 
-That’s it! You’re ready to go 💣
+Boom — you're all set! 💣
 
 
 ---
 
 ⚠️ Disclaimer
 
-> This tool is strictly for educational and entertainment purposes only.
-The developer assumes no responsibility for any misuse, damage, or illegal activity caused by this project.
+> This tool is strictly intended for educational and fun use only.
+The author does not support or condone any misuse or illegal activity.
+Use it responsibly and at your own risk.
 
