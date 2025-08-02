@@ -17,11 +17,14 @@ Got questions, feedback, or just wanna vibe? Reach out here:
 
 ⚙️ Quick Start Guide
 
-Run the following commands in your terminal:
-
-git clone https://github.com/ERROR0101r/Hidden-bomber1
-cd Hidden-bomber1
-bash setup.sh
+Run the following commands in your terminal: <br>
+1 clone the repo <br>
+git clone https://github.com/ERROR0101r/Hidden-bomber1 <br>
+2 go to the tool directory <br>
+cd Hidden-bomber1 
+3 setup the tool <br>
+bash setup.sh <br>
+4 run the tool <br>
 python hiddenbomber.py
 
 💣 Boom — you're all set!
