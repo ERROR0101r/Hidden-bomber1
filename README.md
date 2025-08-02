@@ -1,4 +1,4 @@
-h1 align="center">🚀 Hidden-Bomber</h1>
+<h1> align="center">🚀 Hidden-Bomber</h1>
 <p align="center"><strong>A fun and powerful tool crafted by <span style="color:#ff6b81;">HIDDEN KING</span> 😎</strong></p>
 
 ---
