@@ -17,9 +17,10 @@ Got questions? Feedback? Or just wanna vibe? Reach out below:
 
 Clone the repo and run:
 
-```bash
-bash setup.sh
-
+1 git clone https://github.com/ERROR0101r/Hidden-bomber1
+2 cd Hidden-bomber1
+2 bash setup.sh
+3 python hiddenbomber.py
 Boom — you're all set! 💣
 
 
