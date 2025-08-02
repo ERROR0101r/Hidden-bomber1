@@ -1,7 +1,7 @@
 
 <h1 align="center">🚀 Hidden-Bomber</h1>  
 <p align="center"><strong>A slick and powerful SMS bombing tool forged by <span style="color:#ff6b81;">HIDDEN KING</span> 😎</strong></p>
----
+
 
 📲 Connect With Me
 
